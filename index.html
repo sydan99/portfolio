@@ -1,0 +1,1345 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shovan Datta | QA Tester & Test Automation Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            400: '#34d399',
+                            500: '#10b981',
+                            600: '#059669',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar & subtle animations */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #10b981;
+        }
+
+        .grid-bg {
+            background-size: 32px 32px;
+            background-image: 
+                linear-gradient(to right, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.04); }
+        }
+        .glow-orb {
+            animation: pulseGlow 7s ease-in-out infinite;
+        }
+
+        /* Print styles for clean single-page resume printing */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableResumeModal, #printableResumeModal * {
+                visibility: visible;
+            }
+            #printableResumeModal {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white !important;
+                color: black !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                display: block !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-white transition-colors duration-300 grid-bg min-h-screen flex flex-col">
+
+    <!-- Background Ambient Glow -->
+    <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="glow-orb absolute -top-28 -left-28 w-96 h-96 bg-emerald-500/10 dark:bg-emerald-500/15 rounded-full blur-3xl"></div>
+        <div class="glow-orb absolute top-1/3 -right-28 w-96 h-96 bg-cyan-500/10 dark:bg-cyan-500/15 rounded-full blur-3xl" style="animation-delay: 2.5s;"></div>
+    </div>
+
+    <!-- Custom Toast Notification (No alert() used) -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Sticky Navigation Bar -->
+    <header class="sticky top-0 z-40 backdrop-blur-xl bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand / Identity -->
+            <a href="#top" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-cyan-600 flex items-center justify-center text-white font-mono font-bold text-lg shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+                    SD
+                </div>
+                <div>
+                    <div class="font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                        Shovan Datta
+                        <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-mono font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                            QA & Automation
+                        </span>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-mono">Cognizant • Kolkata, India</p>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-1 lg:gap-2 text-sm font-medium">
+                <a href="#metrics" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Impact Metrics</a>
+                <a href="#skills" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Skills Matrix</a>
+                <a href="#experience" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Experience</a>
+                <a href="#automation-lab" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                    Live PyTest Lab
+                </a>
+                <a href="#education" class="px-3 py-2 rounded-lg text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-100 dark:hover:bg-slate-900 transition">Education</a>
+            </nav>
+
+            <!-- Action Controls -->
+            <div class="flex items-center gap-2">
+                <button onclick="openResumeModal()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-900 text-white dark:bg-white dark:text-slate-900 hover:opacity-90 transition shadow-sm">
+                    <i class="fa-regular fa-file-lines"></i>
+                    <span>Resume View</span>
+                </button>
+
+                <button id="themeToggleBtn" onclick="toggleTheme()" aria-label="Toggle color theme" class="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:border-emerald-500/50 transition">
+                    <i id="themeIcon" class="fa-solid fa-sun text-amber-400"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main id="top" class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-16 flex-grow">
+
+        <!-- HERO SECTION -->
+        <section class="relative rounded-3xl border border-slate-200/90 dark:border-slate-800/90 bg-white/90 dark:bg-slate-900/80 backdrop-blur-xl p-6 sm:p-10 lg:p-12 shadow-xl shadow-slate-900/5">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Left Column: Bio & Value Prop -->
+                <div class="lg:col-span-8 space-y-6">
+                    <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 text-xs font-mono">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span>QUALITY ASSURANCE TESTER & TEST AUTOMATION ENGINEER</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                            Accelerating Agile Delivery with <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500">Precision QA & Python Automation.</span>
+                        </h1>
+                        <p class="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+                            Results-driven Quality Assurance Tester at <strong class="text-slate-900 dark:text-white font-semibold">Cognizant Technology Solutions</strong>. During my 15-month tenure on the <strong class="text-slate-900 dark:text-white font-semibold">Cox Communications</strong> project, I secured the quality of <span class="text-emerald-600 dark:text-emerald-400 font-semibold">24 major production releases</span> and validated <span class="text-emerald-600 dark:text-emerald-400 font-semibold">181 total Jira issues (151+ core validations)</span> across 30 sprints. Adept at full-cycle defect management, UAT, and Test Data Management (TDM), alongside modern automation using <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">Python</span>, <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">PyTest</span>, <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">Playwright</span>, and <span class="font-mono text-sm bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">SQL</span>.
+                        </p>
+                    </div>
+
+                    <!-- Interactive Contact Bar -->
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <!-- Copy Email Button -->
+                        <button onclick="copyToClipboard('shovan.datta@cognizant.com', 'Email address')" class="group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15 border border-slate-200 dark:border-slate-700 hover:border-emerald-500/40 text-sm font-medium transition">
+                            <i class="fa-regular fa-envelope text-emerald-500"></i>
+                            <span>shovan.datta@cognizant.com</span>
+                            <i class="fa-regular fa-copy text-xs text-slate-400 group-hover:text-emerald-400 transition"></i>
+                        </button>
+
+                        <!-- Copy Phone Button -->
+                        <button onclick="copyToClipboard('8100034218', 'Phone number')" class="group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/90 hover:bg-emerald-500/10 dark:hover:bg-emerald-500/15 border border-slate-200 dark:border-slate-700 hover:border-emerald-500/40 text-sm font-medium transition">
+                            <i class="fa-solid fa-phone text-cyan-500"></i>
+                            <span>+91 8100034218</span>
+                            <i class="fa-regular fa-copy text-xs text-slate-400 group-hover:text-emerald-400 transition"></i>
+                        </button>
+
+                        <!-- Location Badge -->
+                        <div class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-sm text-slate-600 dark:text-slate-300">
+                            <i class="fa-solid fa-location-dot text-rose-500"></i>
+                            <span>Kolkata, India</span>
+                        </div>
+                    </div>
+
+                    <!-- Quick CTA Buttons -->
+                    <div class="flex flex-wrap items-center gap-3 pt-2">
+                        <a href="#automation-lab" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold text-sm shadow-lg shadow-emerald-500/25 transition">
+                            <i class="fa-solid fa-terminal"></i>
+                            <span>Launch Live PyTest Runner</span>
+                        </a>
+                        <a href="#experience" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-emerald-500/50 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-semibold text-sm transition">
+                            <i class="fa-solid fa-layer-group text-emerald-500"></i>
+                            <span>Explore Project Impact</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Column: Live QA Build Status Card -->
+                <div class="lg:col-span-4">
+                    <div class="rounded-2xl bg-slate-950 text-slate-100 p-5 border border-slate-800 shadow-2xl font-mono text-xs space-y-4">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                                <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                                <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                                <span class="ml-2 text-slate-400">qa_health_monitor.py</span>
+                            </div>
+                            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[10px] font-semibold">PASSING</span>
+                        </div>
+
+                        <div class="space-y-2.5">
+                            <div class="flex justify-between items-center text-slate-400">
+                                <span>CURRENT ROLE</span>
+                                <span class="text-white font-semibold">Cognizant QA</span>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-400">
+                                <span>KEY CLIENT</span>
+                                <span class="text-cyan-400 font-semibold">Cox Communications</span>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-400">
+                                <span>RELEASE STABILITY</span>
+                                <span class="text-emerald-400 font-semibold">24 / 24 Releases ✓</span>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-400">
+                                <span>SPRINT CADENCE</span>
+                                <span class="text-amber-300 font-semibold">30 Agile Sprints</span>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-400">
+                                <span>AUTOMATION STACK</span>
+                                <span class="text-emerald-300">Python • PyTest • Playwright</span>
+                            </div>
+                        </div>
+
+                        <!-- Mini Sprint Velocity Bar Preview -->
+                        <div class="pt-2 border-t border-slate-800/80 space-y-2">
+                            <div class="flex justify-between text-[11px]">
+                                <span class="text-slate-400">Ticket Validation Breakdown</span>
+                                <span class="text-emerald-400 font-bold">181 Total Jira Issues</span>
+                            </div>
+                            <div class="w-full h-3 rounded-full bg-slate-800 overflow-hidden flex">
+                                <div class="bg-emerald-500 h-full" style="width: 68.5%" title="124 User Stories (68.5%)"></div>
+                                <div class="bg-cyan-400 h-full" style="width: 31.5%" title="57 Defects (31.5%)"></div>
+                            </div>
+                            <div class="flex justify-between text-[11px] text-slate-400">
+                                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>124 User Stories</span>
+                                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cyan-400"></span>57 Defects Validated</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: ANIMATED QA IMPACT DASHBOARD / METRICS -->
+        <section id="metrics" class="space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                    <div class="text-xs font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-semibold">
+                        01 / Verified Delivery Telemetry
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                        QA Impact & Agile Velocity Dashboard
+                    </h2>
+                </div>
+                <button onclick="animateCounters()" class="self-start sm:self-auto inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-mono font-medium bg-slate-200/70 dark:bg-slate-800/80 hover:bg-emerald-500/15 text-slate-700 dark:text-slate-300 hover:text-emerald-500 border border-slate-300/60 dark:border-slate-700 transition">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Replay Metric Counters</span>
+                </button>
+            </div>
+
+            <!-- 4 Core KPI Counter Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <!-- Card 1: 181 Jira Issues -->
+                <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-6 shadow-sm hover:border-emerald-500/50 transition group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="p-3 rounded-xl bg-emerald-500/10 text-emerald-500">
+                            <i class="fa-solid fa-check-double text-lg"></i>
+                        </span>
+                        <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                            151+ Core Validated
+                        </span>
+                    </div>
+                    <div class="flex items-baseline gap-1">
+                        <span class="metric-counter text-4xl font-extrabold text-slate-900 dark:text-white" data-target="181">181</span>
+                        <span class="text-sm font-mono text-emerald-500 font-semibold">Jira Issues</span>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                        Executed manual & functional testing across <strong class="text-slate-700 dark:text-slate-200">124 User Stories</strong> and <strong class="text-slate-700 dark:text-slate-200">57 Defects</strong>.
+                    </p>
+                </div>
+
+                <!-- Card 2: 24 Production Releases -->
+                <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-6 shadow-sm hover:border-cyan-500/50 transition group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="p-3 rounded-xl bg-cyan-500/10 text-cyan-500">
+                            <i class="fa-solid fa-rocket text-lg"></i>
+                        </span>
+                        <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">
+                            15-Month Tenure
+                        </span>
+                    </div>
+                    <div class="flex items-baseline gap-1">
+                        <span class="metric-counter text-4xl font-extrabold text-slate-900 dark:text-white" data-target="24">24</span>
+                        <span class="text-sm font-mono text-cyan-500 font-semibold">Prod Releases</span>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                        Secured major production rollouts through rigorous staging UAT & post-deployment validation.
+                    </p>
+                </div>
+
+                <!-- Card 3: 30 Agile Sprints -->
+                <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-6 shadow-sm hover:border-violet-500/50 transition group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="p-3 rounded-xl bg-violet-500/10 text-violet-500">
+                            <i class="fa-solid fa-gauge-high text-lg"></i>
+                        </span>
+                        <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-violet-500/10 text-violet-600 dark:text-violet-400">
+                            6 Avg → 15 Peak/Sprint
+                        </span>
+                    </div>
+                    <div class="flex items-baseline gap-1">
+                        <span class="metric-counter text-4xl font-extrabold text-slate-900 dark:text-white" data-target="30">30</span>
+                        <span class="text-sm font-mono text-violet-500 font-semibold">Agile Sprints</span>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                        Sustained consistent velocity of 6 tickets/sprint and scaled to 15 tickets during peak delivery.
+                    </p>
+                </div>
+
+                <!-- Card 4: 67 Distinct Defects -->
+                <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-6 shadow-sm hover:border-amber-500/50 transition group">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="p-3 rounded-xl bg-amber-500/10 text-amber-500">
+                            <i class="fa-solid fa-bug-slash text-lg"></i>
+                        </span>
+                        <span class="text-xs font-mono px-2.5 py-1 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400">
+                            100% Ownership
+                        </span>
+                    </div>
+                    <div class="flex items-baseline gap-1">
+                        <span class="metric-counter text-4xl font-extrabold text-slate-900 dark:text-white" data-target="67">67</span>
+                        <span class="text-sm font-mono text-amber-500 font-semibold">Defects Closed</span>
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                        Identified, documented, and tracked 67 distinct defects through final retesting and closure.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interactive Visual Analytics Row: Sprint Velocity Simulator & Issue Distribution -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Left: Interactive Sprint Velocity Visualizer -->
+                <div class="lg:col-span-7 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-6 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                            <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-chart-column text-emerald-500"></i>
+                                <span>Agile Sprint Velocity & Peak Delivery Scaling</span>
+                            </h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">
+                                Hover or tap bars to inspect ticket throughput across representative sprint blocks (30 total sprints)
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-2 text-xs font-mono">
+                            <span class="px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                                Avg: 6 / sprint
+                            </span>
+                            <span class="px-2.5 py-1 rounded-lg bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
+                                Peak: 15 / sprint
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Bar Chart Container -->
+                    <div id="velocityChart" class="h-44 pt-6 pb-2 px-2 flex items-end justify-between gap-2 sm:gap-3 border-b border-slate-200 dark:border-slate-800">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <div id="velocityTooltip" class="text-xs font-mono text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800/80 px-3.5 py-2 rounded-xl flex items-center justify-between">
+                        <span><i class="fa-solid fa-circle-info text-emerald-500 mr-1.5"></i>Click or hover any sprint bar above to inspect delivery breakdown.</span>
+                        <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Total: 181 Issues</span>
+                    </div>
+                </div>
+
+                <!-- Right: Interactive Issue & Defect Breakdown Card -->
+                <div class="lg:col-span-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-6 flex flex-col justify-between space-y-4">
+                    <div class="space-y-1">
+                        <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-cyan-500"></i>
+                            <span>QA Deliverable Composition</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">
+                            Interactive breakdown of Cox Communications QA metrics
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 my-auto">
+                        <!-- Bar 1 -->
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-xs font-medium">
+                                <span class="text-slate-700 dark:text-slate-200">User Stories Validated</span>
+                                <span class="font-mono font-bold text-emerald-500">124 / 181 (68.5%)</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full" style="width: 68.5%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Bar 2 -->
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-xs font-medium">
+                                <span class="text-slate-700 dark:text-slate-200">Sprint Defect Fixes Validated</span>
+                                <span class="font-mono font-bold text-cyan-500">57 / 181 (31.5%)</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full" style="width: 31.5%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Bar 3 -->
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-xs font-medium">
+                                <span class="text-slate-700 dark:text-slate-200">End-to-End Defects Logged, Tracked & Closed</span>
+                                <span class="font-mono font-bold text-amber-500">67 (100% Closed)</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-amber-500 to-orange-400 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+
+                        <!-- Bar 4 -->
+                        <div class="space-y-1.5">
+                            <div class="flex justify-between text-xs font-medium">
+                                <span class="text-slate-700 dark:text-slate-200">Production Releases Validated (Staging UAT + Prod)</span>
+                                <span class="font-mono font-bold text-violet-500">24 Releases (100%)</span>
+                            </div>
+                            <div class="w-full h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-full" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                        <span>Zero bottlenecks via proactive TDM</span>
+                        <span class="font-mono text-emerald-500 font-semibold">✓ Verified</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: INTERACTIVE SKILLS FILTER & COMPETENCY MATRIX -->
+        <section id="skills" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <div class="text-xs font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-semibold">
+                        02 / Core Competencies & Tech Stack
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                        Interactive QA & Automation Skills Matrix
+                    </h2>
+                </div>
+
+                <!-- Category Filter Buttons -->
+                <div class="flex flex-wrap gap-2" id="skillFilterContainer">
+                    <button onclick="filterSkills('all')" data-filter="all" class="skill-tab px-3.5 py-2 rounded-xl text-xs font-semibold transition bg-emerald-500 text-white shadow-sm">
+                        All Competencies (13)
+                    </button>
+                    <button onclick="filterSkills('testing')" data-filter="testing" class="skill-tab px-3.5 py-2 rounded-xl text-xs font-semibold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40">
+                        Testing & Methodologies (6)
+                    </button>
+                    <button onclick="filterSkills('languages')" data-filter="languages" class="skill-tab px-3.5 py-2 rounded-xl text-xs font-semibold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40">
+                        Languages & Frameworks (4)
+                    </button>
+                    <button onclick="filterSkills('tools')" data-filter="tools" class="skill-tab px-3.5 py-2 rounded-xl text-xs font-semibold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40">
+                        Tools & Platforms (3)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Skills Grid -->
+            <div id="skillsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Populated dynamically by JavaScript -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: INTERACTIVE EXPERIENCE TIMELINE -->
+        <section id="experience" class="space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                    <div class="text-xs font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-semibold">
+                        03 / Career Progression
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                        Professional Experience at Cognizant
+                    </h2>
+                </div>
+
+                <!-- Focus Filter Pills -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterExperienceHighlights('all')" class="exp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 transition" data-exp="all">
+                        All Responsibilities
+                    </button>
+                    <button onclick="filterExperienceHighlights('agile')" class="exp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/30 transition" data-exp="agile">
+                        Agile & UAT Releases
+                    </button>
+                    <button onclick="filterExperienceHighlights('tdm')" class="exp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/30 transition" data-exp="tdm">
+                        TDM & Defect Lifecycle
+                    </button>
+                    <button onclick="filterExperienceHighlights('ebs')" class="exp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/30 transition" data-exp="ebs">
+                        Enterprise ERP / EBS
+                    </button>
+                </div>
+            </div>
+
+            <div class="relative pl-4 sm:pl-8 border-l-2 border-emerald-500/40 space-y-8">
+                <!-- Experience 1: Cox Communications -->
+                <div class="relative group">
+                    <!-- Timeline Dot -->
+                    <div class="absolute -left-[25px] sm:-left-[41px] top-6 w-4 h-4 rounded-full bg-emerald-500 ring-4 ring-emerald-500/20"></div>
+
+                    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-6 sm:p-8 shadow-sm hover:border-emerald-500/40 transition space-y-6">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-5">
+                            <div>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">Quality Assurance Tester</h3>
+                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                                        Current Project
+                                    </span>
+                                </div>
+                                <p class="text-sm font-medium text-slate-600 dark:text-slate-300 mt-1">
+                                    Cognizant Technology Solutions • <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Client: Cox Communications</span>
+                                </p>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+                                <span class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                                    <i class="fa-regular fa-calendar mr-1.5 text-emerald-500"></i>July 2025 – Present (15+ Months)
+                                </span>
+                                <span class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                                    Kolkata, India
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Impact Highlights Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Highlight 1 -->
+                            <div class="exp-item p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-800 space-y-2 transition" data-tags="all agile">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                                        <i class="fa-solid fa-bolt mr-1"></i>Agile Testing & Velocity
+                                    </span>
+                                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500">181 Jira Issues</span>
+                                </div>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                    Executed manual and functional testing for <strong class="text-slate-900 dark:text-white">181 total Jira issues</strong> (124 user stories and 57 defects; 151+ core sprint validations) across <strong class="text-slate-900 dark:text-white">30 Agile sprints</strong>, maintaining a consistent velocity of 6 tickets per sprint and scaling up to 15 tickets during peak delivery cycles.
+                                </p>
+                            </div>
+
+                            <!-- Highlight 2 -->
+                            <div class="exp-item p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-800 space-y-2 transition" data-tags="all agile">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">
+                                        <i class="fa-solid fa-shield-halved mr-1"></i>Release Management & UAT
+                                    </span>
+                                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-500">24 Prod Releases</span>
+                                </div>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                    Played a key role in <strong class="text-slate-900 dark:text-white">24 successful production releases</strong> by performing rigorous staging environment UAT and post-deployment production validation to ensure seamless client rollouts.
+                                </p>
+                            </div>
+
+                            <!-- Highlight 3 -->
+                            <div class="exp-item p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-800 space-y-2 transition" data-tags="all tdm">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-mono font-bold uppercase tracking-wider text-violet-600 dark:text-violet-400">
+                                        <i class="fa-solid fa-database mr-1"></i>Test Data Management (TDM)
+                                    </span>
+                                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-violet-500/10 text-violet-400">Zero Bottlenecks</span>
+                                </div>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                    Spearheaded test data preparation for the broader QA team by coordinating data requests and independently validating dataset integrity, eliminating bottlenecks before sprint testing phases began.
+                                </p>
+                            </div>
+
+                            <!-- Highlight 4 -->
+                            <div class="exp-item p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-800 space-y-2 transition" data-tags="all tdm">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-mono font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                                        <i class="fa-solid fa-bug mr-1"></i>Defect Lifecycle Management
+                                    </span>
+                                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-500">67 Defects Closed</span>
+                                </div>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                    Identified, documented, and tracked <strong class="text-slate-900 dark:text-white">67 distinct defects</strong>, taking full ownership of the defect lifecycle through to final retesting and closure.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 2: Retail Client (Oracle EBS) -->
+                <div class="relative group">
+                    <!-- Timeline Dot -->
+                    <div class="absolute -left-[25px] sm:-left-[41px] top-6 w-4 h-4 rounded-full bg-cyan-500 ring-4 ring-cyan-500/20"></div>
+
+                    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-6 sm:p-8 shadow-sm hover:border-cyan-500/40 transition space-y-6">
+                        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-5">
+                            <div>
+                                <h3 class="text-xl font-bold text-slate-900 dark:text-white">Quality Assurance Tester</h3>
+                                <p class="text-sm font-medium text-slate-600 dark:text-slate-300 mt-1">
+                                    Cognizant Technology Solutions • <span class="text-cyan-600 dark:text-cyan-400 font-semibold">Retail Client (Enterprise ERP)</span>
+                                </p>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-2 text-xs font-mono">
+                                <span class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                                    <i class="fa-regular fa-calendar mr-1.5 text-cyan-500"></i>Early 2024 – July 2025
+                                </span>
+                                <span class="px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                                    Kolkata, India
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Highlight 1 -->
+                            <div class="exp-item p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-800 space-y-2 transition" data-tags="all ebs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-mono font-bold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">
+                                        <i class="fa-solid fa-server mr-1"></i>Oracle EBS Validation
+                                    </span>
+                                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-500">Application Management</span>
+                                </div>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                    Executed quality assurance testing for a major retail client's <strong class="text-slate-900 dark:text-white">Oracle E-Business Suite (EBS)</strong> application management services.
+                                </p>
+                            </div>
+
+                            <!-- Highlight 2 -->
+                            <div class="exp-item p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/70 dark:border-slate-800 space-y-2 transition" data-tags="all ebs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-xs font-mono font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400">
+                                        <i class="fa-solid fa-diagram-project mr-1"></i>Scenario Testing
+                                    </span>
+                                    <span class="text-[11px] font-mono px-2 py-0.5 rounded bg-teal-500/10 text-teal-500">ERP Workflows</span>
+                                </div>
+                                <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                                    Designed and executed comprehensive test cases for complex job scenarios, ensuring the stability and reliability of enterprise resource planning (ERP) workflows.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: TECHNICAL PROJECTS & INTERACTIVE LIVE PYTEST / PLAYWRIGHT RUNNER -->
+        <section id="automation-lab" class="space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                    <div class="text-xs font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-semibold">
+                        04 / Technical Projects & Continuous Learning
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                        Python Test Automation Architecture & Live Runner
+                    </h2>
+                </div>
+                <div class="inline-flex items-center gap-2 text-xs font-mono px-3 py-1.5 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    <i class="fa-brands fa-python text-sm"></i>
+                    <span>Python • PyTest • Playwright • Windows ARM • VS Code</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                <!-- Left Column: Project Architecture Details -->
+                <div class="lg:col-span-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-6 flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-mono font-semibold">
+                            <i class="fa-solid fa-code-branch"></i>
+                            <span>Active Automation Roadmap</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 dark:text-white">
+                            Python Test Automation Architecture
+                        </h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Transitioning manual validation workflows into repeatable, high-speed automated test suites engineered natively on a <strong class="text-slate-900 dark:text-white">Windows ARM</strong> environment using <strong class="text-slate-900 dark:text-white">Visual Studio Code</strong>.
+                        </p>
+
+                        <ul class="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                            <li class="flex items-start gap-2.5">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i>
+                                <span><strong class="text-slate-900 dark:text-white">Playwright + PyTest Roadmap:</strong> Structured modular fixtures, parameterized test suites, and end-to-end browser assertions.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i>
+                                <span><strong class="text-slate-900 dark:text-white">VS Code Integration:</strong> Configured seamless test discovery, debugging profiles, and automated regression execution to accelerate release sign-offs.</span>
+                            </li>
+                            <li class="flex items-start gap-2.5">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1"></i>
+                                <span><strong class="text-slate-900 dark:text-white">SQL & TDM Readiness:</strong> Combining backend dataset integrity checks with UI & API validation assertions.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Interactive Trigger Box -->
+                    <div class="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700/80 space-y-3">
+                        <div class="flex items-center justify-between text-xs font-mono">
+                            <span class="text-slate-500 dark:text-slate-400">INTERACTIVE DEMO</span>
+                            <span id="suiteStatusBadge" class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-500 font-semibold">READY TO RUN</span>
+                        </div>
+                        <p class="text-xs text-slate-600 dark:text-slate-300">
+                            Click below to simulate running Shovan's PyTest & Playwright verification suite in the VS Code terminal.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <button id="runPytestBtn" onclick="runSimulatedPytestSuite()" class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-mono font-semibold text-xs shadow-md shadow-emerald-500/20 transition">
+                                <i class="fa-solid fa-play"></i>
+                                <span>Run PyTest Suite (5 Tests)</span>
+                            </button>
+                            <button onclick="resetPytestTerminal()" class="px-3 py-2.5 rounded-xl bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-mono text-xs transition" title="Clear terminal">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive VS Code + PyTest Simulator -->
+                <div class="lg:col-span-7 rounded-2xl bg-slate-950 border border-slate-800 shadow-2xl overflow-hidden flex flex-col font-mono text-xs">
+                    <!-- Top IDE Bar -->
+                    <div class="bg-slate-900 px-4 py-2.5 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-rose-500"></span>
+                            <span class="w-3 h-3 rounded-full bg-amber-400"></span>
+                            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+                            <span class="ml-2 text-slate-400 text-[11px]">VS Code (Windows ARM64) — shovan_qa_suite</span>
+                        </div>
+                        <!-- Code File Tabs -->
+                        <div class="flex items-center gap-1">
+                            <button onclick="switchCodeTab('pytest')" id="tab-pytest" class="px-2.5 py-1 rounded bg-slate-800 text-emerald-400 border border-slate-700 text-[11px] transition">
+                                test_qa_portfolio.py
+                            </button>
+                            <button onclick="switchCodeTab('sql')" id="tab-sql" class="px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 text-[11px] transition">
+                                tdm_validation.sql
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Code Viewer Pane -->
+                    <div id="codeDisplayPane" class="p-4 bg-slate-950/90 text-slate-300 overflow-x-auto border-b border-slate-800 leading-relaxed max-h-56">
+<pre id="codeBlockPytest" class="text-[11px] sm:text-xs"><span class="text-purple-400">import</span> pytest
+<span class="text-purple-400">from</span> playwright.sync_api <span class="text-purple-400">import</span> Page, expect
+
+<span class="text-cyan-400">@pytest.mark.parametrize</span>(<span class="text-amber-300">"sprint_mode,expected_velocity"</span>, [(<span class="text-amber-300">"standard"</span>, <span class="text-emerald-400">6</span>), (<span class="text-amber-300">"peak"</span>, <span class="text-emerald-400">15</span>)])
+<span class="text-purple-400">def</span> <span class="text-blue-400">test_agile_sprint_delivery</span>(sprint_mode, expected_velocity):
+    <span class="text-slate-500"># Validated 181 total Jira issues (124 stories, 57 defects) across 30 sprints</span>
+    total_issues = <span class="text-emerald-400">124</span> + <span class="text-emerald-400">57</span>
+    <span class="text-purple-400">assert</span> total_issues == <span class="text-emerald-400">181</span> <span class="text-purple-400">and</span> expected_velocity <span class="text-purple-400">in</span> (<span class="text-emerald-400">6</span>, <span class="text-emerald-400">15</span>)
+
+<span class="text-purple-400">def</span> <span class="text-blue-400">test_cox_production_releases_uat</span>(page: Page):
+    <span class="text-slate-500"># Verify all 24 major production releases passed staging UAT &amp; prod validation</span>
+    releases_validated, defect_closures = <span class="text-emerald-400">24</span>, <span class="text-emerald-400">67</span>
+    <span class="text-purple-400">assert</span> releases_validated == <span class="text-emerald-400">24</span> <span class="text-purple-400">and</span> defect_closures == <span class="text-emerald-400">67</span></pre>
+
+<pre id="codeBlockSql" class="text-[11px] sm:text-xs hidden"><span class="text-slate-500">-- Pre-Sprint Test Data Management (TDM) Integrity Validation Query</span>
+<span class="text-purple-400">SELECT</span> 
+    sprint_id,
+    COUNT(dataset_id) <span class="text-purple-400">AS</span> ready_test_datasets,
+    SUM(<span class="text-purple-400">CASE WHEN</span> integrity_status = <span class="text-amber-300">'VALIDATED'</span> <span class="text-purple-400">THEN</span> <span class="text-emerald-400">1</span> <span class="text-purple-400">ELSE</span> <span class="text-emerald-400">0</span> <span class="text-purple-400">END</span>) <span class="text-purple-400">AS</span> verified_records
+<span class="text-purple-400">FROM</span> qa_staging.tdm_sprint_datasets
+<span class="text-purple-400">WHERE</span> project_client = <span class="text-amber-300">'Cox Communications'</span>
+  <span class="text-purple-400">AND</span> blocker_count = <span class="text-emerald-400">0</span>
+<span class="text-purple-400">GROUP BY</span> sprint_id
+<span class="text-purple-400">HAVING</span> COUNT(dataset_id) &gt; <span class="text-emerald-400">0</span>;</pre>
+                    </div>
+
+                    <!-- Terminal Output Console -->
+                    <div class="p-4 flex-1 flex flex-col justify-between bg-black/60 space-y-3 min-h-[210px]">
+                        <div class="flex items-center justify-between text-[11px] text-slate-400 border-b border-slate-800/80 pb-2">
+                            <span>TERMINAL • pytest -v tests/test_qa_portfolio.py</span>
+                            <span id="terminalTimer" class="text-emerald-400">0.00s</span>
+                        </div>
+                        <div id="terminalOutput" class="space-y-1.5 text-[11px] sm:text-xs overflow-y-auto max-h-48 pr-1">
+                            <div class="text-slate-400">$ Ready. Click <span class="text-emerald-400 font-semibold">"Run PyTest Suite"</span> to execute automated portfolio verification tests...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: EDUCATION & CREDENTIALS -->
+        <section id="education" class="space-y-6">
+            <div>
+                <div class="text-xs font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-semibold">
+                    05 / Academic Foundation
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">
+                    Education
+                </h2>
+            </div>
+
+            <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+                <div class="flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 shrink-0">
+                        <i class="fa-solid fa-graduation-cap text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">
+                            Bachelor of Technology (B.Tech)
+                        </h3>
+                        <p class="text-sm font-medium text-slate-600 dark:text-slate-300 mt-0.5">
+                            Institute of Engineering and Management (IEM), Kolkata
+                        </p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                            Engineering foundation in systems analysis, software engineering fundamentals, and structured problem solving.
+                        </p>
+                    </div>
+                </div>
+                <div class="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-mono text-sm font-semibold shrink-0">
+                    Graduated: 2022
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 border-t border-slate-200 dark:border-slate-800/80 bg-white/60 dark:bg-slate-950/60 backdrop-blur-md py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+            <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span class="font-semibold text-slate-800 dark:text-slate-200">Shovan Datta</span>
+                <span>• Quality Assurance Tester & Test Automation Portfolio</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+                <button onclick="copyToClipboard('shovan.datta@cognizant.com', 'Email')" class="hover:text-emerald-500 transition">
+                    shovan.datta@cognizant.com
+                </button>
+                <span>•</span>
+                <button onclick="copyToClipboard('8100034218', 'Phone')" class="hover:text-emerald-500 transition">
+                    Ph: 8100034218
+                </button>
+                <span>•</span>
+                <button onclick="openResumeModal()" class="text-emerald-600 dark:text-emerald-400 font-semibold hover:underline">
+                    Printable Resume View
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PRINTABLE / ATS RESUME MODAL -->
+    <div id="printableResumeModal" class="fixed inset-0 z-50 hidden bg-slate-950/80 backdrop-blur-sm overflow-y-auto p-4 sm:p-8">
+        <div class="max-w-4xl mx-auto bg-white text-slate-900 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden">
+            <!-- Modal Action Header (Hidden when printing) -->
+            <div class="no-print bg-slate-900 text-white px-6 py-4 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-2 text-sm font-mono">
+                    <i class="fa-solid fa-file-pdf text-emerald-400"></i>
+                    <span>ATS-Ready Single-Page Resume View</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="window.print()" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-semibold transition">
+                        <i class="fa-solid fa-print"></i>
+                        <span>Print / Save as PDF</span>
+                    </button>
+                    <button onclick="closeResumeModal()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition">
+                        <i class="fa-solid fa-xmark"></i>
+                        <span>Close</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resume Sheet Content -->
+            <div class="p-6 sm:p-10 space-y-5 text-sm leading-relaxed">
+                <div class="border-b-2 border-slate-900 pb-4 flex flex-col sm:flex-row sm:items-end justify-between gap-2">
+                    <div>
+                        <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">Shovan Datta</h1>
+                        <p class="text-sm font-semibold text-emerald-700">Quality Assurance Tester & Test Automation Engineer</p>
+                    </div>
+                    <div class="text-xs text-slate-700 font-mono sm:text-right space-y-0.5">
+                        <div>Kolkata, India</div>
+                        <div>Ph: +91 8100034218</div>
+                        <div>shovan.datta@cognizant.com</div>
+                    </div>
+                </div>
+
+                <!-- Summary -->
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-1 mb-2">Professional Summary</h2>
+                    <p class="text-xs sm:text-sm text-slate-700">
+                        Results-driven Quality Assurance Tester with a proven track record of accelerating Agile delivery and ensuring software stability. During my 15-month tenure on the Cox Communications project, I secured the quality of 24 major production releases and successfully validated 151+ (181 total) Jira issues across 30 sprints. Adept at full-cycle defect management, UAT, and Test Data Management (TDM), with modern automation frameworks including Python with PyTest and Playwright, alongside hands-on experience in SQL.
+                    </p>
+                </div>
+
+                <!-- Core Competencies -->
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-1 mb-2">Core Competencies & Skills</h2>
+                    <ul class="text-xs sm:text-sm space-y-1 text-slate-700">
+                        <li><strong>Testing & Methodologies:</strong> Manual and Functional Testing, Agile/Scrum, User Acceptance Testing (UAT), Staging & Production Validation, Defect Lifecycle Management, Test Data Management (TDM)</li>
+                        <li><strong>Tools & Platforms:</strong> Jira (JQL, Dashboards), Postman, Visual Studio Code</li>
+                        <li><strong>Languages & Frameworks:</strong> Python, PyTest, Playwright, SQL</li>
+                    </ul>
+                </div>
+
+                <!-- Experience -->
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-1 mb-2">Professional Experience</h2>
+                    
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between font-bold text-slate-900 text-xs sm:text-sm">
+                                <span>Quality Assurance Tester — Cognizant Technology Solutions | Client: Cox Communications</span>
+                                <span>July 2025 – Present</span>
+                            </div>
+                            <ul class="list-disc list-inside text-xs sm:text-sm text-slate-700 mt-1 space-y-1">
+                                <li><strong>Agile Testing & Velocity:</strong> Executed manual and functional testing for 181 total Jira issues (124 user stories and 57 defects) across 30 Agile sprints, maintaining a consistent velocity of 6 tickets per sprint and scaling up to 15 tickets during peak delivery cycles.</li>
+                                <li><strong>Release Management & UAT:</strong> Played a key role in 24 successful production releases by performing rigorous staging environment UAT and post-deployment production validation to ensure seamless client rollouts.</li>
+                                <li><strong>Test Data Management (TDM):</strong> Spearheaded test data preparation for the broader QA team by coordinating data requests and independently validating dataset integrity, eliminating bottlenecks before sprint testing phases began.</li>
+                                <li><strong>Defect Lifecycle Management:</strong> Identified, documented, and tracked 67 distinct defects, taking full ownership of the defect lifecycle through to final retesting and closure.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between font-bold text-slate-900 text-xs sm:text-sm">
+                                <span>Quality Assurance Tester — Cognizant Technology Solutions | Retail Client</span>
+                                <span>Early 2024 – July 2025</span>
+                            </div>
+                            <ul class="list-disc list-inside text-xs sm:text-sm text-slate-700 mt-1 space-y-1">
+                                <li><strong>Oracle EBS Validation:</strong> Executed quality assurance testing for a retail client's Oracle E-Business Suite (EBS) application management services.</li>
+                                <li><strong>Scenario Testing:</strong> Designed and executed test cases for complex job scenarios, ensuring the reliability of enterprise resource planning workflows.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Projects -->
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-1 mb-2">Technical Projects & Continuous Learning</h2>
+                    <div class="font-bold text-slate-900 text-xs sm:text-sm">Python Test Automation Architecture</div>
+                    <ul class="list-disc list-inside text-xs sm:text-sm text-slate-700 mt-1 space-y-1">
+                        <li>Developing a test automation roadmap utilizing Python, PyTest, and Playwright on a Windows ARM environment.</li>
+                        <li>Integrating automated testing scripts within Visual Studio Code to transition from manual to automated validation processes.</li>
+                    </ul>
+                </div>
+
+                <!-- Education -->
+                <div>
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-300 pb-1 mb-2">Education</h2>
+                    <div class="flex justify-between text-xs sm:text-sm font-bold text-slate-900">
+                        <span>Bachelor of Technology (B.Tech) — Institute of Engineering and Management (IEM), Kolkata</span>
+                        <span>2022</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Portfolio JavaScript -->
+    <script>
+        // 1. Skills Data
+        const skillsData = [
+            {
+                name: "Manual & Functional Testing",
+                category: "testing",
+                badge: "Core QA",
+                icon: "fa-solid fa-vial-circle-check",
+                level: "Expert",
+                desc: "Validated 181 total Jira issues (124 user stories & 57 defects) across 30 sprints with thorough edge-case coverage."
+            },
+            {
+                name: "Agile / Scrum Delivery",
+                category: "testing",
+                badge: "Methodology",
+                icon: "fa-solid fa-arrows-spin",
+                level: "Advanced",
+                desc: "Sustained a velocity of 6 tickets/sprint and scaled to 15 tickets/sprint during high-priority release cycles."
+            },
+            {
+                name: "User Acceptance Testing (UAT)",
+                category: "testing",
+                badge: "Release Gate",
+                icon: "fa-solid fa-users-viewfinder",
+                level: "Expert",
+                desc: "Executed rigorous pre-release staging UAT across 24 major Cox Communications production rollouts."
+            },
+            {
+                name: "Staging & Production Validation",
+                category: "testing",
+                badge: "Deployment",
+                icon: "fa-solid fa-server",
+                level: "Expert",
+                desc: "Performed post-deployment smoke & sanity validations across 24 major releases to guarantee zero-downtime rollouts."
+            },
+            {
+                name: "Defect Lifecycle Management",
+                category: "testing",
+                badge: "Ownership",
+                icon: "fa-solid fa-bug-slash",
+                level: "Expert",
+                desc: "Identified, documented, prioritized, and tracked 67 distinct defects from discovery through retest and closure."
+            },
+            {
+                name: "Test Data Management (TDM)",
+                category: "testing",
+                badge: "Lead Coordinator",
+                icon: "fa-solid fa-database",
+                level: "Expert",
+                desc: "Spearheaded test data requests and validated dataset integrity ahead of sprint kickoffs to eliminate QA blockers."
+            },
+            {
+                name: "Python",
+                category: "languages",
+                badge: "Automation Language",
+                icon: "fa-brands fa-python",
+                level: "Active Focus",
+                desc: "Writing clean, modular test scripts and utilities for automated web and backend validation workflows."
+            },
+            {
+                name: "PyTest",
+                category: "languages",
+                badge: "Test Framework",
+                icon: "fa-solid fa-cubes",
+                level: "Active Focus",
+                desc: "Leveraging fixtures, parameterized assertions, and structured test discovery for scalable regression suites."
+            },
+            {
+                name: "Playwright",
+                category: "languages",
+                badge: "Browser Automation",
+                icon: "fa-solid fa-masks-theater",
+                level: "Active Focus",
+                desc: "Automating modern end-to-end UI workflows on Windows ARM within Visual Studio Code."
+            },
+            {
+                name: "SQL",
+                category: "languages",
+                badge: "Data Validation",
+                icon: "fa-solid fa-table-columns",
+                level: "Proficient",
+                desc: "Querying relational databases to verify backend data integrity and prepare accurate test datasets."
+            },
+            {
+                name: "Jira (JQL & Dashboards)",
+                category: "tools",
+                badge: "Defect & Sprint Tracking",
+                icon: "fa-brands fa-jira",
+                level: "Expert",
+                desc: "Crafting custom JQL filters and sprint dashboards to track 181+ stories/defects and monitor release readiness."
+            },
+            {
+                name: "Postman",
+                category: "tools",
+                badge: "API Testing",
+                icon: "fa-solid fa-paper-plane",
+                level: "Proficient",
+                desc: "Validating REST API endpoints, payloads, status codes, and integration contracts across staging environments."
+            },
+            {
+                name: "Visual Studio Code",
+                category: "tools",
+                badge: "IDE Environment",
+                icon: "fa-solid fa-laptop-code",
+                level: "Proficient",
+                desc: "Configured on Windows ARM for integrated Python, PyTest, and Playwright test authoring and debugging."
+            }
+        ];
+
+        // Render Skills Grid
+        function renderSkills(filter = 'all') {
+            const grid = document.getElementById('skillsGrid');
+            const filtered = filter === 'all' ? skillsData : skillsData.filter(s => s.category === filter);
+
+            grid.innerHTML = filtered.map(skill => `
+                <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/90 p-5 hover:border-emerald-500/50 transition group flex flex-col justify-between gap-3 shadow-sm">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                                <i class="${skill.icon} text-lg"></i>
+                            </div>
+                            <span class="text-[11px] font-mono px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                                ${skill.badge}
+                            </span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 dark:text-white text-base group-hover:text-emerald-500 transition">
+                            ${skill.name}
+                        </h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                            ${skill.desc}
+                        </p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-[11px] font-mono">
+                        <span class="text-slate-400">PROFICIENCY</span>
+                        <span class="text-emerald-600 dark:text-emerald-400 font-semibold">${skill.level}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterSkills(category) {
+            document.querySelectorAll('.skill-tab').forEach(btn => {
+                if (btn.dataset.filter === category) {
+                    btn.className = "skill-tab px-3.5 py-2 rounded-xl text-xs font-semibold transition bg-emerald-500 text-white shadow-sm";
+                } else {
+                    btn.className = "skill-tab px-3.5 py-2 rounded-xl text-xs font-semibold transition bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/40";
+                }
+            });
+            renderSkills(category);
+        }
+
+        // 2. Sprint Velocity Bar Chart (10 representative 3-sprint blocks across 30 sprints = 181 issues)
+        const sprintBlocks = [
+            { label: "S1-S3", tickets: 16, avg: "5.3/sp", note: "Onboarding & Initial Cox Releases" },
+            { label: "S4-S6", tickets: 18, avg: "6.0/sp", note: "Steady Agile Cadence Established" },
+            { label: "S7-S9", tickets: 17, avg: "5.7/sp", note: "Staging UAT & TDM Streamlining" },
+            { label: "S10-S12", tickets: 21, avg: "7.0/sp", note: "Major Feature Rollout Validation" },
+            { label: "S13-S15", tickets: 15, avg: "5.0/sp", note: "Complex End-to-End Regression" },
+            { label: "S16-S18", tickets: 24, avg: "8.0/sp", note: "High-Priority Release Window" },
+            { label: "S19-S21", tickets: 18, avg: "6.0/sp", note: "Consistent 6 Tickets/Sprint Velocity" },
+            { label: "S22-S24", tickets: 16, avg: "5.3/sp", note: "Defect Retesting & Closure Push" },
+            { label: "S25-S27", tickets: 15, avg: "15 Peak!", isPeak: true, note: "Peak Sprint Delivery (15 Tickets in Single Peak Sprint!)" },
+            { label: "S28-S30", tickets: 21, avg: "7.0/sp", note: "24th Production Release Sign-off" }
+        ];
+
+        function renderVelocityChart() {
+            const container = document.getElementById('velocityChart');
+            const maxVal = 25;
+
+            container.innerHTML = sprintBlocks.map((block, idx) => {
+                const heightPct = Math.round((block.tickets / maxVal) * 100);
+                const barColor = block.isPeak
+                    ? "bg-gradient-to-t from-cyan-500 to-emerald-400"
+                    : "bg-gradient-to-t from-emerald-600/80 to-emerald-400/90 hover:from-emerald-500 hover:to-teal-300";
+
+                return `
+                    <div class="flex-1 flex flex-col items-center h-full justify-end group cursor-pointer"
+                         onmouseenter="updateVelocityTooltip(${idx})"
+                         onclick="updateVelocityTooltip(${idx})">
+                        <span class="text-[10px] font-mono font-bold ${block.isPeak ? 'text-cyan-400' : 'text-slate-400 group-hover:text-emerald-400'} mb-1">
+                            ${block.isPeak ? '15★' : block.tickets}
+                        </span>
+                        <div class="w-full max-w-[34px] rounded-t-lg transition-all duration-300 ${barColor}"
+                             style="height: ${heightPct}%"></div>
+                        <span class="text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-1.5">${block.label}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateVelocityTooltip(index) {
+            const block = sprintBlocks[index];
+            const tooltip = document.getElementById('velocityTooltip');
+            tooltip.innerHTML = `
+                <span><strong class="text-emerald-500">${block.label}:</strong> ${block.note}</span>
+                <span class="font-bold text-cyan-500">${block.tickets} Issues (${block.avg})</span>
+            `;
+        }
+
+        // 3. Experience Highlight Filter
+        function filterExperienceHighlights(tag) {
+            document.querySelectorAll('.exp-filter-btn').forEach(btn => {
+                if (btn.dataset.exp === tag) {
+                    btn.className = "exp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 transition";
+                } else {
+                    btn.className = "exp-filter-btn px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/30 transition";
+                }
+            });
+
+            document.querySelectorAll('.exp-item').forEach(item => {
+                const tags = item.dataset.tags.split(' ');
+                if (tags.includes(tag)) {
+                    item.classList.remove('opacity-30', 'scale-[0.98]');
+                    item.classList.add('ring-1', 'ring-emerald-500/40');
+                    if (tag === 'all') item.classList.remove('ring-1', 'ring-emerald-500/40');
+                } else {
+                    item.classList.add('opacity-30', 'scale-[0.98]');
+                    item.classList.remove('ring-1', 'ring-emerald-500/40');
+                }
+            });
+        }
+
+        // 4. Animated Metric Counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('.metric-counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'), 10);
+                let current = 0;
+                const increment = Math.max(1, Math.ceil(target / 35));
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = current;
+                    }
+                }, 22);
+            });
+        }
+
+        // 5. Interactive Live PyTest & Playwright Simulation Runner
+        let isRunningSuite = false;
+
+        function switchCodeTab(tab) {
+            const pytestBlock = document.getElementById('codeBlockPytest');
+            const sqlBlock = document.getElementById('codeBlockSql');
+            const tabPytest = document.getElementById('tab-pytest');
+            const tabSql = document.getElementById('tab-sql');
+
+            if (tab === 'pytest') {
+                pytestBlock.classList.remove('hidden');
+                sqlBlock.classList.add('hidden');
+                tabPytest.className = "px-2.5 py-1 rounded bg-slate-800 text-emerald-400 border border-slate-700 text-[11px] transition";
+                tabSql.className = "px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 text-[11px] transition";
+            } else {
+                pytestBlock.classList.add('hidden');
+                sqlBlock.classList.remove('hidden');
+                tabSql.className = "px-2.5 py-1 rounded bg-slate-800 text-cyan-400 border border-slate-700 text-[11px] transition";
+                tabPytest.className = "px-2.5 py-1 rounded text-slate-400 hover:text-slate-200 text-[11px] transition";
+            }
+        }
+
+        function runSimulatedPytestSuite() {
+            if (isRunningSuite) return;
+            isRunningSuite = true;
+
+            const output = document.getElementById('terminalOutput');
+            const badge = document.getElementById('suiteStatusBadge');
+            const timerEl = document.getElementById('terminalTimer');
+            const btn = document.getElementById('runPytestBtn');
+
+            badge.textContent = "RUNNING...";
+            badge.className = "px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 font-semibold";
+            btn.classList.add('opacity-70', 'cursor-not-allowed');
+
+            output.innerHTML = `<div class="text-slate-300">============================= test session starts =============================</div>
+<div class="text-slate-400">platform win32_arm64 -- Python 3.12.2, pytest-8.1.1, playwright-1.43.0</div>
+<div class="text-slate-400">collected 5 items</div>`;
+
+            const steps = [
+                { delay: 350, time: "0.18s", html: `<div>tests/test_qa_portfolio.py::test_agile_sprint_delivery[standard-6] <span class="text-emerald-400 font-bold">PASSED</span> <span class="text-slate-500">[ 20%]</span></div>` },
+                { delay: 700, time: "0.41s", html: `<div>tests/test_qa_portfolio.py::test_agile_sprint_delivery[peak-15] <span class="text-emerald-400 font-bold">PASSED</span> <span class="text-slate-500">[ 40%]</span></div>` },
+                { delay: 1050, time: "0.74s", html: `<div>tests/test_qa_portfolio.py::test_cox_production_releases_uat[24_releases] <span class="text-emerald-400 font-bold">PASSED</span> <span class="text-slate-500">[ 60%]</span></div>` },
+                { delay: 1400, time: "1.05s", html: `<div>tests/test_qa_portfolio.py::test_tdm_dataset_integrity_sql <span class="text-emerald-400 font-bold">PASSED</span> <span class="text-slate-500">[ 80%]</span></div>` },
+                { delay: 1750, time: "1.32s", html: `<div>tests/test_qa_portfolio.py::test_defect_lifecycle_closure[67_defects] <span class="text-emerald-400 font-bold">PASSED</span> <span class="text-slate-500">[100%]</span></div>` },
+                { delay: 2050, time: "1.38s", html: `<div class="text-emerald-400 font-bold pt-1">============================== 5 passed in 1.38s ==============================</div>` }
+            ];
+
+            steps.forEach((step, idx) => {
+                setTimeout(() => {
+                    output.insertAdjacentHTML('beforeend', step.html);
+                    output.scrollTop = output.scrollHeight;
+                    timerEl.textContent = step.time;
+
+                    if (idx === steps.length - 1) {
+                        badge.textContent = "5 PASSED ✓";
+                        badge.className = "px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-semibold";
+                        btn.classList.remove('opacity-70', 'cursor-not-allowed');
+                        isRunningSuite = false;
+                        showToast("All 5 PyTest + Playwright verification checks passed!");
+                    }
+                }, step.delay);
+            });
+        }
+
+        function resetPytestTerminal() {
+            if (isRunningSuite) return;
+            document.getElementById('terminalOutput').innerHTML = `<div class="text-slate-400">$ Ready. Click <span class="text-emerald-400 font-semibold">"Run PyTest Suite"</span> to execute automated portfolio verification tests...</div>`;
+            document.getElementById('terminalTimer').textContent = "0.00s";
+            const badge = document.getElementById('suiteStatusBadge');
+            badge.textContent = "READY TO RUN";
+            badge.className = "px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-500 font-semibold";
+        }
+
+        // 6. Clipboard Copy & Toast Notification (Using document.execCommand('copy') for iframe compatibility)
+        function copyToClipboard(text, label) {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                showToast(`${label} copied: ${text}`);
+            } catch (err) {
+                showToast(`Copy manually: ${text}`);
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = "px-4 py-3 rounded-xl bg-slate-900 dark:bg-emerald-600 text-white text-xs font-mono font-medium shadow-xl border border-slate-700 dark:border-emerald-400/30 flex items-center gap-2.5 transition-all duration-300";
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400 dark:text-white"></i><span>${message}</span>`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 2800);
+        }
+
+        // 7. Theme Toggle (Dark / Light)
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                icon.className = "fa-solid fa-moon text-slate-700";
+            } else {
+                html.classList.add('dark');
+                icon.className = "fa-solid fa-sun text-amber-400";
+            }
+        }
+
+        // 8. Printable Resume Modal Controls
+        function openResumeModal() {
+            document.getElementById('printableResumeModal').classList.remove('hidden');
+        }
+        function closeResumeModal() {
+            document.getElementById('printableResumeModal').classList.add('hidden');
+        }
+
+        // Close modal on Escape key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeResumeModal();
+        });
+
+        // Initialize on Window Load
+        window.onload = function () {
+            renderSkills('all');
+            renderVelocityChart();
+            animateCounters();
+        };
+    </script>
+</body>
+</html>
